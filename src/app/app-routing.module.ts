@@ -1,0 +1,28 @@
+import { RouterModule } from '@angular/router';
+import { NgModule } from '@angular/core';
+import { NotfoundComponent } from './demo/components/notfound/notfound.component';
+import { AppLayoutComponent } from "./layout/app.layout.component";
+
+@NgModule({
+    imports: [
+        RouterModule.forRoot([
+            {
+                path: '', component: AppLayoutComponent,
+                children: [
+                    { path: '', loadChildren: () => import('./demo/components/dashboard/dashboard.module').then(m => m.DashboardModule) },
+                    // { path: 'my-notes', loadChildren: () => import('./demo/components/myNotes/myNotes.module').then(m => m.myNotesModule) },
+                    { path: 'my-notes', loadChildren: () => import('./demo/components/my-notes/my-notes.module').then(m => m.MyNotesModule) },
+                    { path: 'utilities', loadChildren: () => import('./demo/components/utilities/utilities.module').then(m => m.UtilitiesModule) },
+                    { path: 'documentation', loadChildren: () => import('./demo/components/documentation/documentation.module').then(m => m.DocumentationModule) },
+                    { path: 'blocks', loadChildren: () => import('./demo/components/primeblocks/primeblocks.module').then(m => m.PrimeBlocksModule) },
+                    { path: 'pages', loadChildren: () => import('./demo/components/pages/pages.module').then(m => m.PagesModule) }
+                ]
+            },
+            { path: 'auth', loadChildren: () => import('./demo/components/auth/auth.module').then(m => m.AuthModule) },
+            { path: '**', redirectTo: '/notfound' },
+        ], { scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled', onSameUrlNavigation: 'reload' })
+    ],
+    exports: [RouterModule]
+})
+export class AppRoutingModule {
+}
